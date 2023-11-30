@@ -8,7 +8,8 @@
 
 int main(int argc, char *argv[]){			
 	std::vector<float> tester = {0,1,2,3,4,5,6,7,8,9};
-	int size = 10;
+	int size = 1;
+	int sizeR = 10;
 	int rank = 0;
 	std::vector<float> row;	
 	const std::size_t Nx = tester.size();
@@ -24,11 +25,11 @@ int main(int argc, char *argv[]){
 	
 	bpWriter.BeginStep();
 
-	for(int x;x<size;x++){
-		for(int y;y<size;y++){
+	for(int x;x<sizeR;x++){
+		for(int y;y<sizeR;y++){
 			row.push_back(x+y);		
 		}
-		bpWriter.Put(bpTester,tester.data());
+		bpWriter.Put(bpTester,row.data());
 		row.clear();
 	}
 	
