@@ -8,7 +8,6 @@
 
 int main(int argc, char *argv[]){			
 	std::vector<float> tester = {0,1,2,3,4,5,6,7,8,9};
-	int size = 1;
 	int sizeR = 10;
 	int rank = 0;
 	std::vector<float> row;	
@@ -32,7 +31,7 @@ int main(int argc, char *argv[]){
 
 	bpIO.DefineAttribute<std::string>("vtk.xml", imageData);
 	
-	adios2::Variable<float> bpTester = bpIO.DefineVariable<float>("bpTester", {size * Nx}, {rank * Nx}, {Nx}, adios2::ConstantDims);
+	adios2::Variable<float> bpTester = bpIO.DefineVariable<float>("bpTester", {sizeR * Nx}, {rank * Nx}, {Nx}, adios2::ConstantDims);
 	
 	std::string filename = "fileTest.bp";
 
@@ -44,6 +43,7 @@ int main(int argc, char *argv[]){
 		for(int y;y<sizeR;y++){
 			row.push_back(x+y);		
 		}
+		bpTester.SetSelection({{Nx * x}, {Nx}});
 		bpWriter.Put(bpTester,row.data());
 		row.clear();
 	}
