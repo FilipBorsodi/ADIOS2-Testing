@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
 
 	bpWriter.Close();	
 	 
-	std::cout << "Finished" << "/n";		
+	std::cout << "Finished\n";		
 	return 0;
 }
 
