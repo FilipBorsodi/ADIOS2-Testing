@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
 
 	bpIO.DefineAttribute<std::string>("vtk.xml", imageData);
 	
-	adios2::Variable<float> bpTester = bpIO.DefineVariable<float>("bpTester", {sizeR * Nx}, {rank * Nx}, {Nx}, adios2::ConstantDims);
+	adios2::Variable<float> bpTester = bpIO.DefineVariable<float>("bpTester", {sizeR * Nx}, {rank * Nx}, {Nx});
 	
 	std::string filename = "fileTest.bp";
 
@@ -39,8 +39,8 @@ int main(int argc, char *argv[]){
 	
 	bpWriter.BeginStep();
 
-	for(int x;x<sizeR;x++){
-		for(int y;y<sizeR;y++){
+	for(int x=0;x<sizeR;x++){
+		for(int y=0;y<sizeR;y++){
 			row.push_back(x+y);		
 		}
 		bpTester.SetSelection({{Nx * x}, {Nx}});
