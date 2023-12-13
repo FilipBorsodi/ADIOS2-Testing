@@ -16,17 +16,18 @@ int main(int argc, char *argv[]){
 	adios2::ADIOS adios;
 	adios2::IO bpIO = adios.DeclareIO("bpIO");
 
+	std::string extent = "0" + std::to_string(sizeR) + "0" + std::to_string(sizeR) + "0 0";
+	
 	const std::string imageData = R"(
     		<?xml version="1.0"?>
      		<VTKFile type="ImageData" version="0.1" byte_order="LittleEndian">
-      		  <ImageData WholeExtent="x1 x2 y1 y2" Origin="x0 y0" Spacing="1 1">
-             	    <Piece Extent="x1 x2 y1 y2">
+      		 <ImageData WholeExtent=")" + extent + R"(" Origin="0 0 0" Spacing="1 1 0">
+         	    <Piece Extent=")" + extent + R"(">
            	      <PointData>
-               		<DataArray Name="X" />
-               		<DataArray Name="Y" />
+               		<DataArray Name="bpTester" />
            	      </PointData>
          	    </Piece>
-		  </ImageData>
+		 </ImageData>
      		</VTKFile>)";
 
 	bpIO.DefineAttribute<std::string>("vtk.xml", imageData);
