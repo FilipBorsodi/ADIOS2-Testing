@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 	adios2::ADIOS adios;
 	adios2::IO bpIO = adios.DeclareIO("bpIO");
 
-  for(int x=0;x<sizeR;x++){
+	for(int x=0;x<sizeR;x++){
 		for(int y=0;y<sizeR;y++){
 			data.push_back(x+y);		
 		}
