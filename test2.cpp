@@ -16,7 +16,9 @@ int main(int argc, char *argv[]){
 
 	for(int x=0;x<sizeR;x++){
 		for(int y=0;y<sizeR;y++){
-			data.push_back(x+y);		
+			for(int z=0;y<sizeR;z++){
+				data.push_back(x+y+z);
+			}
 		}
 	}
   
