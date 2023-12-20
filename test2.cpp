@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 	const std::string imageData = R"(
     		<?xml version="1.0"?>
      		<VTKFile type="ImageData" version="0.1" byte_order="LittleEndian">
-      		 <ImageData WholeExtent=")" + extent + R"(" Origin="0 0 0" Spacing="1 1 0">
+      		 <ImageData WholeExtent=")" + extent + R"(" Origin="0 0 0" Spacing="1 1 1">
          	    <Piece Extent=")" + extent + R"(">
            	      <PointData>
                		<DataArray Name="bpTester" />
