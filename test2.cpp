@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]){			
 	std::vector<float> data;
-	int sizeR = 10;
+	std::size_t sizeR = 10;
 	int rank = 0;	
   
 	adios2::ADIOS adios;
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
 		}
 	}
   
-	std::string extent = "0" + std::to_string(sizeR) + "0" + std::to_string(sizeR) + "0 0";
+	const std::string extent = "0 " + std::to_string(sizeR) + " 0 " + std::to_string(sizeR) + " 0 " + std::to_string(sizeR);
 	
 	const std::string imageData = R"(
     		<?xml version="1.0"?>
@@ -36,16 +36,15 @@ int main(int argc, char *argv[]){
 
 	bpIO.DefineAttribute<std::string>("vtk.xml", imageData);
 	
-	adios2::Variable<float> bpTester = bpIO.DefineVariable<float>("bpTester", {sizeR * sizeR}, {rank * sizeR}, {sizeR});
+	adios2::Variable<float> bpTester = bpIO.DefineVariable<float>("bpTester", {sizeR,sizeR,sizeR}, {0,0,0}, {sizeR,sizeR,sizeR});
 	
-	std::string filename = "fileTest.bp";
+	std::string filename = "fileTest2.bp";
 
 	adios2::Engine bpWriter = bpIO.Open(filename, adios2::Mode::Write);
 	
 	bpWriter.BeginStep();
 
-	//bpTester.SetSelection({{Nx * x}, {Nx}});
-	bpWriter.Put(bpTester,row.data());
+	bpWriter.Put(bpTester,data.data());
 		
 	bpWriter.EndStep();
 	bpWriter.Close();	
