@@ -7,11 +7,11 @@
 #include <adios2.h>
 
 int main(int argc, char *argv[]){			
-	std::vector<float> data;
-	std::size_t sizeR = 10;
+	std::vector<double> data;
+	std::size_t sizeR = 64;
 	int rank = 0;	
   
-	adios2::ADIOS adios;
+	adios2::ADIOS adios("adios2.xml);
 	adios2::IO bpIO = adios.DeclareIO("bpIO");
 
 	for(int x=0;x<sizeR;x++){
@@ -22,23 +22,23 @@ int main(int argc, char *argv[]){
 		}
 	}
   
-	const std::string extent = "0 " + std::to_string(sizeR) + " 0 " + std::to_string(sizeR) + " 0 " + std::to_string(sizeR);
+	const std::string extent = "0 " + std::to_string(sizeR) + " " + "0 " + std::to_string(sizeR) + " " + "0 " + std::to_string(sizeR);
 	
 	const std::string imageData = R"(
     		<?xml version="1.0"?>
      		<VTKFile type="ImageData" version="0.1" byte_order="LittleEndian">
       		 <ImageData WholeExtent=")" + extent + R"(" Origin="0 0 0" Spacing="1 1 1">
          	    <Piece Extent=")" + extent + R"(">
-           	      <PointData>
+           	      <CellData Scalars="bpTester">
                		<DataArray Name="bpTester" />
-           	      </PointData>
+           	      </CellData>
          	    </Piece>
 		 </ImageData>
      		</VTKFile>)";
 
 	bpIO.DefineAttribute<std::string>("vtk.xml", imageData);
 	
-	adios2::Variable<float> bpTester = bpIO.DefineVariable<float>("bpTester", {sizeR,sizeR,sizeR}, {0,0,0}, {sizeR,sizeR,sizeR});
+	adios2::Variable<double> values = bpIO.DefineVariable<double>("bpTester", {sizeR,sizeR,sizeR}, {0,0,0}, {sizeR,sizeR,sizeR});
 	
 	std::string filename = "fileTest2.bp";
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 	
 	bpWriter.BeginStep();
 
-	bpWriter.Put(bpTester,data.data());
+	bpWriter.Put(values,data.data());
 		
 	bpWriter.EndStep();
 	bpWriter.Close();	
