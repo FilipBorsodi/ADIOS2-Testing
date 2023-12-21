@@ -11,12 +11,12 @@ int main(int argc, char *argv[]){
 	std::size_t sizeR = 64;
 	int rank = 0;	
   
-	adios2::ADIOS adios("adios2.xml);
+	adios2::ADIOS adios;
 	adios2::IO bpIO = adios.DeclareIO("bpIO");
 
 	for(int x=0;x<sizeR;x++){
 		for(int y=0;y<sizeR;y++){
-			for(int z=0;y<sizeR;z++){
+			for(int z=0;z<sizeR;z++){
 				data.push_back(x+y+z);
 			}
 		}
